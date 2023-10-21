@@ -58,7 +58,7 @@ button:focus {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF0000;
+  background: rgba(179, 175, 175, 0.7);
   border-radius: 12px;
 }
 */
@@ -272,6 +272,7 @@ h1 {
 .heading {
   font-size: 2.4em !important;
   padding-left: 50px !important;
+  margin-right: auto;
 }
 
 .heading-name {
@@ -317,6 +318,17 @@ h1 {
   margin: 10% 0;
   padding: 0.5rem 20%;
   background-color: rgb(255, 0, 0);
+  color: white;
+  border-style: none;
+  border-radius: 0.5rem;
+  transition: 1s;
+  z-index: 10000000000;
+}
+
+.started-button-disabled {
+  margin: 10% 0;
+  padding: 0.5rem 20%;
+  background-color: rgb(136, 130, 130);
   color: white;
   border-style: none;
   border-radius: 0.5rem;
@@ -821,4 +833,110 @@ img {
   color: black;
   text-align: left;
   margin-top: 1rem;
+}
+
+/* YourStyles.css */
+.iframe-slider {
+  display: flex;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+.iframe-slider iframe {
+  margin-right: 10px; /* Adjust as needed to create the desired gap between iframes */
+  transition: transform 0.5s ease;
+}
+
+.iframe-slider iframe:last-child {
+  margin-right: 0; /* Remove margin from the last iframe */
+}
+
+.img-playlist {
+  max-height: 200px;
+  margin: 0.5rem 0.5rem
+}
+
+.main-video {
+  margin: 0.5rem auto;
+}
+
+.img-playlist:hover {
+  cursor: pointer
+}
+
+.playlist-header {
+  text-align: left;
+  font-weight: 100;
+  margin-left: 1rem
+}
+
+
+.description-container {
+  width: 100%;
+  text-align: left;
+  text-indent: 25px;
+  margin-left: 1rem
+}
+
+.description {
+  color: black;
+  margin: 1rem 0;
+  text-align: left;
+  text-indent: 10px; 
+}
+
+.multi-word-input-container {
+  width: 100%;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  align-items: center;
+}
+
+.multi-word-input {
+  background-color: white;
+  width: 90%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none; /* Prevent textarea from being resized by the user */
+   overflow-y: auto; 
+  overflow-wrap: break-word;
+}
+
+.playlist-input-container {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem auto;
+  align-items: center;
+
+}
+
+.playlist-input-container input {
+  min-width: 50%;
+  border: none;
+  border-bottom: 1px solid black;
+  margin: 2rem 0;
+}
+
+.playlist-input-container input:focus {
+  outline: none;
+  border-bottom: 2px solid black;
+}
+
+
+.playlist-input-container button {
+  margin: 2rem 0;
+  min-width: 25%;
+  padding: 0.25rem 0;
+  background-color: #FF0000;
+  border: none;
+  border-radius: 0.5rem
+}
+
+.button-text {
+  font-size: 1.25rem;
+  color: white
 }
