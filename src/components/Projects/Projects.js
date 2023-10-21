@@ -1,95 +1,178 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import ProjectCard from "./ProjectCards";
 import Particle from "../Particle";
-import leaf from "../../Assets/Projects/leaf.png";
-import emotion from "../../Assets/Projects/emotion.png";
-import editor from "../../Assets/Projects/codeEditor.png";
-import chatify from "../../Assets/Projects/chatify.png";
-import suicide from "../../Assets/Projects/suicide.png";
-import bitsOfCode from "../../Assets/Projects/blog.png";
+import AudioReactRecorder, { RecordState } from "audio-react-recorder";
+import axios from "axios";
+import ReactAudioPlayer from "react-audio-player";
+import ReactLoading from "react-loading";
 
+const MicRecorder = require("mic-recorder-to-mp3");
 function Projects() {
+  const [currentRecording, setCurrentRecording] = useState(null);
+  const [processing, setProcessing] = useState(false);
+  const [isRecording, setIsRecording] = useState(null);
+  const [isPredict, setIsPredict] = useState(false);
+  const [currFiles, setCurrFiles] = useState(null);
+  const [loadChat, setLoadChat] = useState(false);
+  const [received, setReceived] = useState(false);
+  const [prompt, setPrompt] = useState("");
+
+  const test = () => {
+    axios
+      .get("/save-recording")
+      .then((response) => {
+        console.log("response: " + response.data.out);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  function downloadAudioBlob(audioBlob) {
+    const blobData = audioBlob;
+    setProcessing(true);
+    const formData = new FormData();
+    formData.append("audio", blobData.blob, "audio.wav");
+    // Send the Blob data to your Flask backend using Axios
+    axios
+      .post("/save-recording", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Make sure to set the content type
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setProcessing(false);
+      })
+      .catch((error) => {
+        console.error("Failed to upload Blob data to Flask:", error);
+        setProcessing(false);
+        // Handle error
+      });
+  }
+
+  const onStop = (audioData) => {
+    // console.log("audioData", audioData);
+    setCurrentRecording(audioData);
+    downloadAudioBlob(audioData);
+    let pred = audioData !== null && currFiles !== null ? true : false;
+    console.log(audioData);
+    console.log(currFiles);
+    console.log("pred");
+    console.log(pred);
+    setIsPredict(pred);
+    // transcribe();
+  };
+
+  const startRecording = async () => {
+    try {
+      setIsRecording(RecordState.START);
+    } catch (error) {
+      console.error("Failed to start recording:", error);
+    }
+  };
+
+  const stopRecording = async () => {
+    try {
+      setIsRecording(RecordState.STOP);
+    } catch (error) {
+      console.error("Failed to stop recording:", error);
+    }
+  };
+
+  const predict = async () => {
+    const formData = new FormData();
+    formData.append("audio", currentRecording.blob, "audio.wav");
+    formData.append("file", currFiles[0]);
+    console.log("predict");
+    setProcessing(true);
+    setLoadChat(true);
+    // await axios
+    //   .post("/predict", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data", // Make sure to set the content type
+    //     },
+    //   })
+    //   .then((response) => {
+    //     setProcessing(false);
+    //     setReceived(true);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Failed to upload Blob data to Flask:", error);
+    //     setProcessing(false);
+    //     // Handle error
+    //   });
+    // await obtainLLMResponse();
+  };
+
+  const handleTextChange = (event) => {
+    setPrompt(event.target.value);
+  };
+
   return (
-    <Container fluid className="project-section">
-      <Particle />
-      <Container>
-        <h1 className="project-heading">
-          My Recent <strong className="purple">Works </strong>
-        </h1>
-        <p style={{ color: "white" }}>
-          Here are a few projects I've worked on recently.
-        </p>
-        <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
-          <Col md={4} className="project-card">
-            <ProjectCard
-              imgPath={chatify}
-              isBlog={false}
-              title="Chatify"
-              description="Personal Chat Room or Workspace to share resources and hangout with friends build with react.js, Material-UI, and Firebase. Have features which allows user for realtime messaging, image sharing as well as supports reactions on messages."
-              ghLink="https://github.com/soumyajit4419/Chatify"
-              demoLink="https://chatify-49.web.app/"
+    <section>
+      <Container fluid className="project-section">
+        <Container>
+          <h1 className="project-heading">
+            My Recent <strong className="green">Works </strong>
+          </h1>
+          <p style={{ color: "white" }}>
+            Here are a few projects I've worked on recently.
+          </p>
+          <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
+            <h1 className="record-title">Audio Recorder</h1>
+            {isRecording == RecordState.START ? (
+              <>
+                <button className="recording-button" onClick={stopRecording}>
+                  Stop Recording
+                </button>
+                <button className="predict-button" disabled={!isPredict}>
+                  Predict
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="recording-button" onClick={startRecording}>
+                  Start Recording
+                </button>
+                <button
+                  className="predict-button"
+                  disabled={!isPredict}
+                  onClick={predict}
+                >
+                  Get Answer
+                </button>
+              </>
+            )}
+            {processing === true ? (
+              <div className="audio-recorder-container">
+                <ReactLoading type="bars" color="#A2FF86" className="loader" />
+              </div>
+            ) : (
+              <div className="no-loader"></div>
+            )}
+            <div className="audio-recorder-container">
+              <AudioReactRecorder
+                state={isRecording}
+                onStop={onStop}
+                canvasHeight={"50%"}
+                backgroundColor={"white"}
+                foregroundColor={"#A2FF86"}
+              />
+            </div>
+            <div />
+            <h2 className="text-input-prompt">Your input:</h2>
+            <textarea
+              id="paragraphInput"
+              value={prompt}
+              onChange={handleTextChange}
+              cols="40"
+              rows="5"
             />
-          </Col>
-
-          <Col md={4} className="project-card">
-            <ProjectCard
-              imgPath={bitsOfCode}
-              isBlog={false}
-              title="Bits-0f-C0de"
-              description="My personal blog page build with Next.js and Tailwind Css which takes the content from makdown files and renders it using Next.js. Supports dark mode and easy to write blogs using markdown."
-              ghLink="https://github.com/soumyajit4419/Bits-0f-C0de"
-              demoLink="https://blogs.soumya-jit.tech/"
-            />
-          </Col>
-
-          <Col md={4} className="project-card">
-            <ProjectCard
-              imgPath={editor}
-              isBlog={false}
-              title="Editor.io"
-              description="Online code and markdown editor build with react.js. Online Editor which supports html, css, and js code with instant view of website. Online markdown editor for building README file which supports GFM, Custom Html tags with toolbar and instant preview.Both the editor supports auto save of work using Local Storage"
-              ghLink="https://github.com/soumyajit4419/Editor.io"
-              demoLink="https://editor.soumya-jit.tech/"              
-            />
-          </Col>
-
-          <Col md={4} className="project-card">
-            <ProjectCard
-              imgPath={leaf}
-              isBlog={false}
-              title="Plant AI"
-              description="Used the plant disease dataset from Kaggle and trained a image classifer model using 'PyTorch' framework using CNN and Transfer Learning with 38 classes of various plant leaves. The model was successfully able to detect diseased and healthy leaves of 14 unique plants. I was able to achieve an accuracy of 98% by using Resnet34 pretrained model."
-              ghLink="https://github.com/soumyajit4419/Plant_AI"
-              demoLink="https://plant49-ai.herokuapp.com/"
-            />
-          </Col>
-
-          <Col md={4} className="project-card">
-            <ProjectCard
-              imgPath={suicide}
-              isBlog={false}
-              title="Ai For Social Good"
-              description="Using 'Natural Launguage Processing' for the detection of suicide-related posts and user's suicide ideation in cyberspace  and thus helping in sucide prevention."
-              ghLink="https://github.com/soumyajit4419/AI_For_Social_Good"
-              // demoLink="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" <--------Please include a demo link here
-            />
-          </Col>
-
-          <Col md={4} className="project-card">
-            <ProjectCard
-              imgPath={emotion}
-              isBlog={false}
-              title="Face Recognition and Emotion Detection"
-              description="Trained a CNN classifier using 'FER-2013 dataset' with Keras and tensorflow backened. The classifier sucessfully predicted the various types of emotions of human. And the highest accuracy obtained with the model was 60.1%.
-              Then used Open-CV to detect the face in an image and then pass the face to the classifer to predict the emotion of a person."
-              ghLink="https://github.com/soumyajit4419/Face_And_Emotion_Detection"
-              // demoLink="https://blogs.soumya-jit.tech/"      <--------Please include a demo link here 
-            />
-          </Col>
-        </Row>
+          </Row>
+          {/* <ReactLoading type="bars" color="#a317a3" className="loader" /> */}
+        </Container>
       </Container>
-    </Container>
+    </section>
   );
 }
 

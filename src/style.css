@@ -50,17 +50,18 @@ button:focus {
   background: 43e;
 }
 
-/* Handle */
+/* Handle
 ::-webkit-scrollbar-thumb {
-  background: rgba(178, 121, 216, 0.959);
+  background: #858484;
   border-radius: 12px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(222, 130, 235, 0.911);
+  background: #FF0000;
   border-radius: 12px;
 }
+*/
 
 /* --------- */
 /* Navbar Section  */
@@ -252,14 +253,13 @@ h1 {
 
 .home-section {
   position: relative;
-  z-index: -1;
   background-position: top center;
   background-repeat: no-repeat;
   padding-bottom: 30px !important;
   padding-top: 30px !important;
   background: white;
   /* border: 1px solid red; */
-  height: 100vh
+  height: auto
 }
 
 .home-content {
@@ -287,7 +287,7 @@ h1 {
 }
 .Typewriter__cursor {
   font-size: 2.4em !important;
-  color: #b562d6 !important;
+  color: #A6FF96 !important;
 }
 
 @media (max-width: 767px) {
@@ -311,6 +311,23 @@ h1 {
     padding-top: 2em !important;
     padding-bottom: 2em !important;
   }
+}
+
+.started-button {
+  margin: 10% 0;
+  padding: 0.5rem 20%;
+  background-color: rgb(255, 0, 0);
+  color: white;
+  border-style: none;
+  border-radius: 0.5rem;
+  transition: 1s;
+  z-index: 10000000000;
+}
+
+.started-button:hover {
+  cursor: pointer;
+  transition: 1s;
+  background-color: rgba(255, 0, 0, 0.9);
 }
 
 .home-about-section {
@@ -444,7 +461,7 @@ h1 {
   position: relative !important;
   padding-top: 150px !important;
   padding-bottom: 30px !important;
-  background-image: var(--section-background-color) !important;
+  background-color: white;
 }
 
 .project-card {
@@ -738,3 +755,70 @@ h1 {
   display: none !important;
 }
 
+.home-yt-start-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+section {
+  background-color: white;
+  color:white;
+  min-height: 100vh;
+}
+
+.yt-logo {
+  /* margin-left: 40%; */
+  max-height: 200px;
+}
+
+.yt-logo-component-text {
+  text-align: left;
+  margin-top: 0.5rem
+}
+/* 
+
+img {
+  border: 1px solid green;
+} */
+
+.audio-recorder-container {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  /* border: 2px solid black; */
+}
+
+.loader{
+  margin: 0 auto;
+  min-height: 7.25vh;
+}
+
+
+.recording-button {
+  padding: 0.5rem 1rem;
+  background-color: #FF0000;
+  color: white;
+  border-style: none;
+  border-radius: 0.5rem;
+  margin: 1rem 1rem;
+  transition: 1s;
+}
+
+
+.recording-button:hover {
+  cursor: pointer;
+  background-color: #FF0000;
+  transition: 1s;
+}
+
+.text-input-prompt {
+  color: black;
+  text-align: left;
+  margin-top: 1rem;
+}
