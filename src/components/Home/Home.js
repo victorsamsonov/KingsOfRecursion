@@ -41,7 +41,7 @@ function Home() {
           </Row>
         </Container>
         {/* <img style="display: block;-webkit-user-select: none;margin: auto;background-color: hsl(0, 0%, 25%);" src="http://10.253.67.104/video.mjpg" width="541" height="962"/>   */}
-        <input type="file" name="video" accept="video/*" capture="environment"/>
+        <input type="file" name="video" accept="video/*" capture="environment" style={{ position: 'relative', zIndex: 9999 }} />
       </Container>
      
     </section>
