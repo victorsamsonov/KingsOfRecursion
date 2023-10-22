@@ -1,0 +1,17 @@
+16
+
+Part II
+Classification and logistic regression
+
+Let's now talk about the classification problem. This is just like the regression problem, except that the values $y$ we now want to predict take on only a small number of discrete values. For now, we will focus on the binary classification problem in which $y$ can take on only two values, 0 and 1 . (Most of what we say here will also generalize to the multiple-class case.) For instance, if we are trying to build a spam classifier for email, then $x^{(i)}$ may be some features of a piece of email, and $y$ may be 1 if it is a piece of spam mail, and 0 otherwise. 0 is also called the negative class, and 1 the positive class, and they are sometimes also denoted by the symbols "-." and "+." Given $x^{(i)}$, the corresponding $y^{(i)}$ is also called the label for the training example.
+5 Logistic regression
+We could approach the classification problem ignoring the fact that $y$ is discrete-valued, and use our old linear regression algorithm to try to predict $y$ given $x$. However, it is easy to construct examples where this method performs very poorly. Intuitively, it also doesn't make sense for $h_{\theta}(x)$ to take values larger than 1 or smaller than 0 when we know that $y \in\{0,1\}$.
+To fix this, let's change the form for our hypotheses $h_{\theta}(x)$. We will choose
+\[
+h_{\theta}(x)=g\left(\theta^{T} x\right)=\frac{1}{1+e^{-\theta^{T} x}}
+\]
+where
+\[
+g(z)=\frac{1}{1+e^{-z}}
+\]
+is called the logistic function or the sigmoid function. Here is a plot showing $g(z)$ :

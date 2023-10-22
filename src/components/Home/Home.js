@@ -17,11 +17,19 @@ function Home() {
           <Row>
             <Col md={7} className="home-header">
               <h1 style={{ paddingBottom: 15 }} className="heading">
-                Welcome to Lorem Ipsum!
+                Welcome to EffiSTEM!
                 <span className="wave" role="img" aria-labelledby="wave">
                   👋🏻
                 </span>
               </h1>
+              <div className="description-container">
+                <text className="description">
+                  Leverage Large Language models for the most customizable and
+                  efficient learning experience in STEM. Upload a youtube
+                  playlist of your choice and/or your lecture notes for
+                  immediate enhanced question answering.
+                </text>
+              </div>
 
               {/* <h1 className="heading-name">
                 I'M
@@ -58,7 +66,7 @@ function Home() {
             // onClick={() => updateExpanded(false)}
           >
             <Nav.Item>
-              <Nav.Link as={Link} to="/playlist">
+              <Nav.Link as={Link} to="/setup">
                 <text style={{ color: "white" }}>Get Started</text>
               </Nav.Link>
             </Nav.Item>

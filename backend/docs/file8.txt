@@ -1,0 +1,48 @@
+8
+2.1 Matrix derivatives
+
+For a function $f: \mathbb{R}^{m \times n} \mapsto \mathbb{R}$ mapping from $m$-by- $n$ matrices to the real numbers, we define the derivative of $f$ with respect to $A$ to be:
+\[
+\nabla_{A} f(A)=\left[\begin{array}{ccc}
+\frac{\partial f}{\partial A_{11}} & \cdots & \frac{\partial f}{\partial A_{1 n}} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial f}{\partial A_{m 1}} & \cdots & \frac{\partial f}{\partial A_{m n}}
+\end{array}\right]
+\]
+
+Thus, the gradient $\nabla_{A} f(A)$ is itself an $m$-by- $n$ matrix, whose $(i, j)$-element is $\partial f / \partial A_{i j}$. For example, suppose $A=\left[\begin{array}{ll}A_{11} & A_{12} \\ A_{21} & A_{22}\end{array}\right]$ is a 2-by-2 matrix, and the function $f: \mathbb{R}^{2 \times 2} \mapsto \mathbb{R}$ is given by
+\[
+f(A)=\frac{3}{2} A_{11}+5 A_{12}^{2}+A_{21} A_{22} .
+\]
+
+Here, $A_{i j}$ denotes the $(i, j)$ entry of the matrix $A$. We then have
+\[
+\nabla_{A} f(A)=\left[\begin{array}{cc}
+\frac{3}{2} & 10 A_{12} \\
+A_{22} & A_{21}
+\end{array}\right] .
+\]
+
+We also introduce the trace operator, written "tr." For an $n$-by- $n$ (square) matrix $A$, the trace of $A$ is defined to be the sum of its diagonal entries:
+\[
+\operatorname{tr} A=\sum_{i=1}^{n} A_{i i}
+\]
+
+If $a$ is a real number (i.e., a 1-by-1 matrix), then $\operatorname{tr} a=a$. (If you haven't seen this "operator notation" before, you should think of the trace of $A$ as $\operatorname{tr}(A)$, or as application of the "trace" function to the matrix $A$. It's more commonly written without the parentheses, however.)
+
+The trace operator has the property that for two matrices $A$ and $B$ such that $A B$ is square, we have that $\operatorname{tr} A B=\operatorname{tr} B A$. (Check this yourself!) As corollaries of this, we also have, e.g.,
+\[
+\begin{array}{c}
+\operatorname{tr} A B C=\operatorname{tr} C A B=\operatorname{tr} B C A, \\
+\operatorname{tr} A B C D=\operatorname{tr} D A B C=\operatorname{tr} C D A B=\operatorname{tr} B C D A .
+\end{array}
+\]
+
+The following properties of the trace operator are also easily verified. Here, $A$ and $B$ are square matrices, and $a$ is a real number:
+\[
+\begin{array}{c}
+\operatorname{tr} A=\operatorname{tr} A^{T} \\
+\operatorname{tr}(A+B)=\operatorname{tr} A+\operatorname{tr} B \\
+\operatorname{tr} a A=a \operatorname{tr} A
+\end{array}
+\]

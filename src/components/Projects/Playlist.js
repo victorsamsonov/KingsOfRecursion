@@ -4,7 +4,16 @@ import AudioReactRecorder, { RecordState } from "audio-react-recorder";
 import axios from "axios";
 import ReactAudioPlayer from "react-audio-player";
 import ReactLoading from "react-loading";
-import PlaylistObjectContext from "../../PlaylistContext";
+import {
+  PlaylistObjectContext,
+  UserPreferanceContext,
+} from "../../PlaylistContext";
+import {
+  AiFillAudio,
+  AiOutlineCaretRight,
+  AiOutlineFileAdd,
+} from "react-icons/ai";
+import Latex from "react-latex-next";
 
 const MicRecorder = require("mic-recorder-to-mp3");
 function PlaylistPage() {
@@ -18,11 +27,22 @@ function PlaylistPage() {
   const [prompt, setPrompt] = useState("");
   const [videoStream, setVideoStream] = useState("");
   const [currentVideoKey, setCurrentVideoKey] = useState("");
+  const [chatbotHistory, setChatbotHistory] = useState([
+    <div className="bot-container">
+      <text className="bot-text">
+        Hello, I am EffiSTEM, a SOTA STEM Large Language Model. I will answer
+        questions based on the playlist and/or notes you uploaded 🤩
+      </text>
+    </div>,
+  ]);
 
   const [playlistURL, setPlaylistURL] = useState("");
   // const { contextValue, updateContextValue } = useContext(ObjectProvider);
   const { contextValue, updateContextValue } = useContext(
     PlaylistObjectContext
+  );
+  const { userPreferance, setUserPreferance } = useContext(
+    UserPreferanceContext
   );
   // const [playlistObject, ]
   const handleURLChange = (event) => {
@@ -55,6 +75,7 @@ function PlaylistPage() {
       .then((response) => {
         console.log(response);
         setProcessing(false);
+        setPrompt(response.data.transcript);
       })
       .catch((error) => {
         console.error("Failed to upload Blob data to Flask:", error);
@@ -70,8 +91,11 @@ function PlaylistPage() {
     }
   }, []);
 
+  const useChatbot = () => {
+    axios.put();
+  };
+
   const onStop = (audioData) => {
-    // console.log("audioData", audioData);
     setCurrentRecording(audioData);
     downloadAudioBlob(audioData);
     let pred = audioData !== null && currFiles !== null ? true : false;
@@ -128,36 +152,37 @@ function PlaylistPage() {
     setPrompt(event.target.value);
   };
 
-  // useEffect(() => {
-  //   const fetchVideoStream = async () => {
-  //     try {
-  //       const response = await axios.get("/video_feed"); // Adjust the URL as needed
-  //       if (response.status === 200) {
-  //         // console.log(response.data);
-  //         setVideoStream(
-  //           URL.createObjectURL(
-  //             new Blob([response.data], { type: "image/jpeg" })
-  //           )
-  //         );
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching video stream:", error);
-  //     }
-  //   };
+  const addUserChat = () => {
+    console.log(prompt);
+    const newMessage = (
+      <div className="user-container">
+        <text className="user-text">{prompt}</text>
+      </div>
+    );
+    setChatbotHistory((prevHistory) => [...prevHistory, newMessage]);
+  };
 
-  //   fetchVideoStream();
-  // }, []);
+  const addBotChat = (out) => {
+    console.log(prompt);
+    const newMessage = (
+      <div className="bot-container">
+        <text className="bot-text">
+          {" "}
+          <Latex>{out}</Latex>
+        </text>
+      </div>
+    );
+    setChatbotHistory((prevHistory) => [...prevHistory, newMessage]);
+  };
 
-  const handlePlaylistURL = async (e) => {
+  const handleChatbot = async (e) => {
     e.preventDefault();
-
+    addUserChat();
+    setPrompt("");
     try {
-      const response = await axios.post("/playlist", { text: playlistURL });
-      console.log(response.data);
-      updateContextValue(response.data.text_dict);
-      const keys = Object.keys(response.data.text_dict);
-      setCurrentVideoKey(keys[0]);
-      console.log(response.data.text_dict);
+      const response = await axios.post("/chatbot", { prompt: prompt });
+      console.log(response);
+      addBotChat(response.data.out);
       // setResult(response.data.result);
     } catch (error) {
       console.error("Error:", error);
@@ -166,19 +191,25 @@ function PlaylistPage() {
 
   function renderIframesFromObject(obj) {
     const iframeKeys = Object.keys(obj);
-
+    console.log(obj);
     return (
-      <div className="iframe-slider">
-        {iframeKeys.map((key) => (
-          <img
-            src={`https://img.youtube.com/vi/${key}/maxresdefault.jpg`}
-            className="img-playlist"
-            onClick={() => {
-              setCurrentVideoKey(key);
-            }}
-          />
-        ))}
-      </div>
+      <>
+        <h1 style={{ color: "white" }}>Playlist 1</h1>
+        <div className="iframe-slider">
+          {iframeKeys.map((key, index) => (
+            <div>
+              <text>Video {index+1}</text>
+              <img
+                src={`https://img.youtube.com/vi/${key}/maxresdefault.jpg`}
+                className="img-playlist"
+                onClick={() => {
+                  setCurrentVideoKey(key);
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </>
     );
   }
 
@@ -204,65 +235,60 @@ function PlaylistPage() {
     <section>
       <Container fluid className="project-section">
         <h1 className="playlist-header">Current Playlist</h1>
-        <Container>
-          <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
-            {Object.keys(contextValue).length !== 0 ? (
-              <>
-                <div>{renderIframesFromObject(contextValue)}</div>
-                <iframe
-                  ref={iframeRef}
-                  className="main-video"
-                  src={`https://www.youtube.com/embed/${currentVideoKey}`}
-                  frameBorder="0"
-                  allow="autoplay; encrypted-media;fullscreen"
-                  allowFullScreen={true}
-                  title="video"
-                  width="500"
-                  height="380"
-                  onLoad={handleIframeLoad}
-                />
-                <button onClick={captureVideoFrame}>Capture Frame</button>
-                <canvas
-                  ref={canvasRef}
-                  style={{ display: "none" }}
-                  width="560"
-                  height="315"
-                />
-              </>
-            ) : (
-              <></>
-            )}
-            <h1 className="record-title">Audio Recorder</h1>
-            {isRecording == RecordState.START ? (
-              <>
-                <button className="recording-button" onClick={stopRecording}>
-                  Stop Recording
-                </button>
-                <button className="predict-button" disabled={!isPredict}>
-                  Predict
-                </button>
-              </>
-            ) : (
-              <>
-                <button className="recording-button" onClick={startRecording}>
-                  Start Recording
-                </button>
-                <button
-                  className="predict-button"
-                  disabled={!isPredict}
-                  onClick={predict}
-                >
-                  Get Answer
-                </button>
-              </>
-            )}
-            {processing === true ? (
+        <div className="playlist-page-container">
+          <Row
+            style={{
+              justifyContent: "center",
+              width: "55%",
+            }}
+          >
+            <div>
+              {Object.keys(contextValue).length !== 0 ? (
+                <>
+                  <div className="video-container">
+                    {renderIframesFromObject(contextValue)}
+                  </div>
+                  <iframe
+                    ref={iframeRef}
+                    className="main-video"
+                    src={`https://www.youtube.com/embed/${currentVideoKey}`}
+                    frameBorder="0"
+                    allow="autoplay; encrypted-media;fullscreen"
+                    allowFullScreen={true}
+                    title="video"
+                    width="500"
+                    height="380"
+                    onLoad={handleIframeLoad}
+                  />
+                </>
+              ) : (
+                <>
+                  <h1 style={{ textAlign: "center", color: "black" }}>
+                    Add a playlist
+                  </h1>
+                </>
+              )}
+            </div>
+          </Row>
+          <Row
+            style={{
+              justifyContent: "center",
+              width: "37.5%",
+            }}
+            className="chatbot-container"
+          >
+            <h1 className="record-title" style={{ color: "black" }}>
+              Chatbot
+            </h1>
+            <div className="chatbot-chat-container">{chatbotHistory}</div>
+
+            {/* {processing === true ? (
               <div className="audio-recorder-container">
                 <ReactLoading type="bars" color="#A2FF86" className="loader" />
               </div>
             ) : (
               <div className="no-loader"></div>
-            )}
+            )} */}
             <div className="audio-recorder-container">
               <AudioReactRecorder
                 state={isRecording}
@@ -273,38 +299,69 @@ function PlaylistPage() {
               />
             </div>
             <div />
-            <h2 className="text-input-prompt">Your input:</h2>
-            <textarea
-              id="paragraphInput"
-              value={prompt}
-              onChange={handleTextChange}
-              cols="40"
-              rows="5"
-            />
+            <div className="bottom-section-chatbot">
+              <textarea
+                className="chatbot-input"
+                value={prompt}
+                onChange={handleTextChange}
+              />
+              {isRecording === RecordState.START ? (
+                <AiFillAudio
+                  color="red"
+                  className="audio-record"
+                  width={100}
+                  height={100}
+                  onClick={stopRecording}
+                />
+              ) : (
+                <AiFillAudio
+                  color="white"
+                  className="audio-record"
+                  width={100}
+                  height={100}
+                  onClick={startRecording}
+                />
+              )}
+              <AiOutlineCaretRight
+                color="white"
+                className="audio-record"
+                width={100}
+                height={100}
+                onClick={handleChatbot}
+              />
+              {isRecording === RecordState.START && processing !== true ? (
+                <ReactLoading
+                  type="bars"
+                  color="#A2FF86"
+                  width={100}
+                  height={100}
+                  className="audio-record-animation"
+                />
+              ) : (
+                <></>
+              )}
+              {processing === true ? (
+                <ReactLoading
+                  type="spin"
+                  color="#A2FF86"
+                  width={100}
+                  height={100}
+                  className="audio-record-animation"
+                />
+              ) : (
+                <></>
+              )}
+            </div>
           </Row>
-          {/* <ReactLoading type="bars" color="#a317a3" className="loader" /> */}
-        </Container>
+        </div>
+
+        {/* <ReactLoading type="bars" color="#a317a3" className="loader" /> */}
       </Container>
-
-      {/* <iframe
-        src="/video_feed"
-        frameborder="0"
-        allow="autoplay; encrypted-media;fullscreen"
-        allowfullscreen={true}
-        title="video"
-        width="500"
-        height="380"
-      /> */}
-      <input
-        type="text"
-        id="textInput"
-        value={playlistURL}
-        onChange={handleURLChange}
-      />
-      <button onClick={handlePlaylistURL}></button>
-
-      {/* <iframe autoPlay controls src={videoStream} width="640" height="480" /> */}
-      {/* <img id="bg" width="1200px" height="900px" src="/video_feed" /> */}
+      <button
+        onClick={() => {
+          console.log(userPreferance);
+        }}
+      ></button>
     </section>
   );
 }

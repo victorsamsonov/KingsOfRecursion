@@ -1,0 +1,18 @@
+25
+satisfy $h(x)=\mathrm{E}[y \mid x]$. (Note that this assumption is satisfied in the choices for $h_{\theta}(x)$ for both logistic regression and linear regression. For instance, in logistic regression, we had $h_{\theta}(x)=p(y=1 \mid x ; \theta)=0 \cdot p(y=$ $0 \mid x ; \theta)+1 \cdot p(y=1 \mid x ; \theta)=\mathrm{E}[y \mid x ; \theta]$.
+3. The natural parameter $\eta$ and the inputs $x$ are related linearly: $\eta=\theta^{T} x$. (Or, if $\eta$ is vector-valued, then $\eta_{i}=\theta_{i}^{T} x$.)
+
+The third of these assumptions might seem the least well justified of the above, and it might be better thought of as a "design choice" in our recipe for designing GLMs, rather than as an assumption per se. These three assumptions/design choices will allow us to derive a very elegant class of learning algorithms, namely GLMs, that have many desirable properties such as ease of learning. Furthermore, the resulting models are often very effective for modelling different types of distributions over $y$; for example, we will shortly show that both logistic regression and ordinary least squares can both be derived as GLMs.
+9.1 Ordinary Least Squares
+
+To show that ordinary least squares is a special case of the GLM family of models, consider the setting where the target variable $y$ (also called the response variable in GLM terminology) is continuous, and we model the conditional distribution of $y$ given $x$ as as a Gaussian $\mathcal{N}\left(\mu, \sigma^{2}\right)$. (Here, $\mu$ may depend $x$.) So, we let the ExponentialFamily $(\eta)$ distribution above be the Gaussian distribution. As we saw previously, in the formulation of the Gaussian as an exponential family distribution, we had $\mu=\eta$. So, we have
+\[
+\begin{aligned}
+h_{\theta}(x) & =E[y \mid x ; \theta] \\
+& =\mu \\
+& =\eta \\
+& =\theta^{T} x .
+\end{aligned}
+\]
+
+The first equality follows from Assumption 2, above; the second equality follows from the fact that $y \mid x ; \theta \sim \mathcal{N}\left(\mu, \sigma^{2}\right)$, and so its expected value is given by $\mu$; the third equality follows from Assumption 1 (and our earlier derivation showing that $\mu=\eta$ in the formulation of the Gaussian as an exponential family distribution); and the last equality follows from Assumption 3.

@@ -1,0 +1,15 @@
+17
+
+Notice that $g(z)$ tends towards 1 as $z \rightarrow \infty$, and $g(z)$ tends towards 0 as $z \rightarrow-\infty$. Moreover, $\mathrm{g}(\mathrm{z})$, and hence also $h(x)$, is always bounded between 0 and 1. As before, we are keeping the convention of letting $x_{0}=1$, so that $\theta^{T} x=\theta_{0}+\sum_{j=1}^{n} \theta_{j} x_{j}$.
+
+For now, let's take the choice of $g$ as given. Other functions that smoothly increase from 0 to 1 can also be used, but for a couple of reasons that we'll see later (when we talk about GLMs, and when we talk about generative learning algorithms), the choice of the logistic function is a fairly natural one. Before moving on, here's a useful property of the derivative of the sigmoid function, which we write as $g^{\prime}$ :
+\[
+\begin{aligned}
+g^{\prime}(z) & =\frac{d}{d z} \frac{1}{1+e^{-z}} \\
+& =\frac{1}{\left(1+e^{-z}\right)^{2}}\left(e^{-z}\right) \\
+& =\frac{1}{\left(1+e^{-z}\right)} \cdot\left(1-\frac{1}{\left(1+e^{-z}\right)}\right) \\
+& =g(z)(1-g(z)) .
+\end{aligned}
+\]
+
+So, given the logistic regression model, how do we fit $\theta$ for it? Following how we saw least squares regression could be derived as the maximum likelihood estimator under a set of assumptions, let's endow our classification model with a set of probabilistic assumptions, and then fit the parameters via maximum likelihood.

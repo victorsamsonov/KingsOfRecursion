@@ -1,0 +1,20 @@
+24
+
+Thus, we see that the Gaussian is in the exponential family, with
+\[
+\begin{aligned}
+\eta & =\mu \\
+T(y) & =y \\
+a(\eta) & =\mu^{2} / 2 \\
+& =\eta^{2} / 2 \\
+b(y) & =(1 / \sqrt{2 \pi}) \exp \left(-y^{2} / 2\right) .
+\end{aligned}
+\]
+
+There're many other distributions that are members of the exponential family: The multinomial (which we'll see later), the Poisson (for modelling count-data; also see the problem set); the gamma and the exponential (for modelling continuous, non-negative random variables, such as timeintervals); the beta and the Dirichlet (for distributions over probabilities); and many more. In the next section, we will describe a general "recipe" for constructing models in which $y$ (given $x$ and $\theta$ ) comes from any of these distributions.
+9 Constructing GLMs
+Suppose you would like to build a model to estimate the number $y$ of customers arriving in your store (or number of page-views on your website) in any given hour, based on certain features $x$ such as store promotions, recent advertising, weather, day-of-week, etc. We know that the Poisson distribution usually gives a good model for numbers of visitors. Knowing this, how can we come up with a model for our problem? Fortunately, the Poisson is an exponential family distribution, so we can apply a Generalized Linear Model (GLM). In this section, we will we will describe a method for constructing GLM models for problems such as these.
+
+More generally, consider a classification or regression problem where we would like to predict the value of some random variable $y$ as a function of $x$. To derive a GLM for this problem, we will make the following three assumptions about the conditional distribution of $y$ given $x$ and about our model:
+1. $y \mid x ; \theta \sim \operatorname{ExponentialFamily~}(\eta)$. I.e., given $x$ and $\theta$, the distribution of $y$ follows some exponential family distribution, with parameter $\eta$.
+2. Given $x$, our goal is to predict the expected value of $T(y)$ given $x$. In most of our examples, we will have $T(y)=y$, so this means we would like the prediction $h(x)$ output by our learned hypothesis $h$ to

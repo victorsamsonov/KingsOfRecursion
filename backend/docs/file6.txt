@@ -1,0 +1,9 @@
+6
+
+The ellipses shown above are the contours of a quadratic function. Also shown is the trajectory taken by gradient descent, which was initialized at $(48,30)$. The $x$ 's in the figure (joined by straight lines) mark the successive values of $\theta$ that gradient descent went through.
+
+When we run batch gradient descent to fit $\theta$ on our previous dataset, to learn to predict housing price as a function of living area, we obtain $\theta_{0}=71.27, \theta_{1}=0.1345$. If we plot $h_{\theta}(x)$ as a function of $x$ (area), along with the training data, we obtain the following figure:
+
+If the number of bedrooms were included as one of the input features as well, we get $\theta_{0}=89.60, \theta_{1}=0.1392, \theta_{2}=-8.738$.
+
+The above results were obtained with batch gradient descent. There is an alternative to batch gradient descent that also works very well. Consider the following algorithm:

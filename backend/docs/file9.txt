@@ -1,0 +1,21 @@
+9
+
+We now state without proof some facts of matrix derivatives (we won't need some of these until later this quarter). Equation (4) applies only to non-singular square matrices $A$, where $|A|$ denotes the determinant of $A$. We have:
+\[
+\begin{aligned}
+\nabla_{A} \operatorname{tr} A B & =B^{T} \\
+\nabla_{A^{T}} f(A) & =\left(\nabla_{A} f(A)\right)^{T} \\
+\nabla_{A} \operatorname{tr} A B A^{T} C & =C A B+C^{T} A B^{T} \\
+\nabla_{A}|A| & =|A|\left(A^{-1}\right)^{T}
+\end{aligned}
+\]
+
+To make our matrix notation more concrete, let us now explain in detail the meaning of the first of these equations. Suppose we have some fixed matrix $B \in \mathbb{R}^{n \times m}$. We can then define a function $f: \mathbb{R}^{m \times n} \mapsto \mathbb{R}$ according to $f(A)=\operatorname{tr} A B$. Note that this definition makes sense, because if $A \in \mathbb{R}^{m \times n}$, then $A B$ is a square matrix, and we can apply the trace operator to it; thus, $f$ does indeed map from $\mathbb{R}^{m \times n}$ to $\mathbb{R}$. We can then apply our definition of matrix derivatives to find $\nabla_{A} f(A)$, which will itself by an $m$-by- $n$ matrix. Equation (1) above states that the $(i, j)$ entry of this matrix will be given by the $(i, j)$-entry of $B^{T}$, or equivalently, by $B_{j i}$.
+
+The proofs of Equations (1-3) are reasonably simple, and are left as an exercise to the reader. Equations (4) can be derived using the adjoint representation of the inverse of a matrix. ${ }^{3}$
+2.2 Least squares revisited
+
+Armed with the tools of matrix derivatives, let us now proceed to find in closed-form the value of $\theta$ that minimizes $J(\theta)$. We begin by re-writing $J$ in matrix-vectorial notation.
+
+Given a training set, define the design matrix $X$ to be the $m$-by- $n$ matrix (actually $m$-by- $n+1$, if we include the intercept term) that contains
+${ }^{3}$ If we define $A^{\prime}$ to be the matrix whose $(i, j)$ element is $(-1)^{i+j}$ times the determinant of the square matrix resulting from deleting row $i$ and column $j$ from $A$, then it can be proved that $A^{-1}=\left(A^{\prime}\right)^{T} /|A|$. (You can check that this is consistent with the standard way of finding $A^{-1}$ when $A$ is a 2 -by-2 matrix. If you want to see a proof of this more general result, see an intermediate or advanced linear algebra text, such as Charles Curtis, 1991, Linear Algebra, Springer.) This shows that $A^{\prime}=|A|\left(A^{-1}\right)^{T}$. Also, the determinant of a matrix can be written $|A|=\sum_{j} A_{i j} A_{i j}^{\prime}$. Since $\left(A^{\prime}\right)_{i j}$ does not depend on $A_{i j}$ (as can be seen from its definition), this implies that $\left(\partial / \partial A_{i j}\right)|A|=A_{i j}^{\prime}$. Putting all this together shows the result.

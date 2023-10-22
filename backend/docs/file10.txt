@@ -1,0 +1,53 @@
+10
+the training examples' input values in its rows:
+\[
+X=\left[\begin{array}{c}
+-\left(x^{(1)}\right)^{T}- \\
+-\left(x^{(2)}\right)^{T}- \\
+\vdots \\
+-\left(x^{(m)}\right)^{T}-
+\end{array}\right]
+\]
+
+Also, let $\vec{y}$ be the $m$-dimensional vector containing all the target values from the training set:
+\[
+\vec{y}=\left[\begin{array}{c}
+y^{(1)} \\
+y^{(2)} \\
+\vdots \\
+y^{(m)}
+\end{array}\right]
+\]
+
+Now, since $h_{\theta}\left(x^{(i)}\right)=\left(x^{(i)}\right)^{T} \theta$, we can easily verify that
+\[
+\begin{aligned}
+X \theta-\vec{y} & =\left[\begin{array}{c}
+\left(x^{(1)}\right)^{T} \theta \\
+\vdots \\
+\left(x^{(m)}\right)^{T} \theta
+\end{array}\right]-\left[\begin{array}{c}
+y^{(1)} \\
+\vdots \\
+y^{(m)}
+\end{array}\right] \\
+& =\left[\begin{array}{c}
+h_{\theta}\left(x^{(1)}\right)-y^{(1)} \\
+\vdots \\
+h_{\theta}\left(x^{(m)}\right)-y^{(m)}
+\end{array}\right]
+\end{aligned}
+\]
+
+Thus, using the fact that for a vector $z$, we have that $z^{T} z=\sum_{i} z_{i}^{2}$ :
+\[
+\begin{aligned}
+\frac{1}{2}(X \theta-\vec{y})^{T}(X \theta-\vec{y}) & =\frac{1}{2} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2} \\
+& =J(\theta)
+\end{aligned}
+\]
+
+Finally, to minimize $J$, let's find its derivatives with respect to $\theta$. Combining Equations (2) and (3), we find that
+\[
+\nabla_{A^{T}} \operatorname{tr} A B A^{T} C=B^{T} A^{T} C^{T}+B A^{T} C
+\]

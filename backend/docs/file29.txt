@@ -1,0 +1,39 @@
+29
+
+This function mapping from the $\eta$ 's to the $\phi$ 's is called the softmax function.
+To complete our model, we use Assumption 3, given earlier, that the $\eta_{i}$ 's are linearly related to the $x$ 's. So, have $\eta_{i}=\theta_{i}^{T} x$ (for $i=1, \ldots, k-1$ ), where $\theta_{1}, \ldots, \theta_{k-1} \in \mathbb{R}^{n+1}$ are the parameters of our model. For notational convenience, we can also define $\theta_{k}=0$, so that $\eta_{k}=\theta_{k}^{T} x=0$, as given previously. Hence, our model assumes that the conditional distribution of $y$ given $x$ is given by
+\[
+\begin{aligned}
+p(y=i \mid x ; \theta) & =\phi_{i} \\
+& =\frac{e^{\eta_{i}}}{\sum_{j=1}^{k} e^{\eta_{j}}} \\
+& =\frac{e^{\theta_{i}^{T} x}}{\sum_{j=1}^{k} e^{\theta_{j}^{T} x}}
+\end{aligned}
+\]
+
+This model, which applies to classification problems where $y \in\{1, \ldots, k\}$, is called softmax regression. It is a generalization of logistic regression.
+Our hypothesis will output
+\[
+\begin{aligned}
+h_{\theta}(x) & =\mathrm{E}[T(y) \mid x ; \theta] \\
+& =\mathrm{E}\left[\begin{array}{c|c}
+1\{y=1\} & \\
+1\{y=2\} & \\
+\vdots & \\
+1\{y=k-1\} &
+\end{array}\right] \\
+& =\left[\begin{array}{c}
+\phi_{1} \\
+\phi_{2} \\
+\vdots \\
+\phi_{k-1}
+\end{array}\right] \\
+& =\left[\begin{array}{c}
+\frac{\exp \left(\theta_{1}^{T} x\right)}{\sum_{j=1}^{k} \exp \left(\theta_{j}^{T} x\right)} \\
+\frac{\exp \left(\theta_{2}^{T} x\right)}{\sum_{j=1}^{k} \exp \left(\theta_{j}^{T} x\right)} \\
+\vdots \\
+\frac{\exp \left(\theta_{k-1}^{T} x\right)}{\sum_{j=1}^{k} \exp \left(\theta_{j}^{T} x\right)}
+\end{array}\right] .
+\end{aligned}
+\]
+
+In other words, our hypothesis will output the estimated probability that $p(y=i \mid x ; \theta)$, for every value of $i=1, \ldots, k$. (Even though $h_{\theta}(x)$ as defined above is only $k-1$ dimensional, clearly $p(y=k \mid x ; \theta)$ can be obtained as $1-\sum_{i=1}^{k-1} \phi_{i}$.)

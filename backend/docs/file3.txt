@@ -1,0 +1,27 @@
+3
+Part I
+Linear Regression
+
+To make our housing example more interesting, let's consider a slightly richer dataset in which we also know the number of bedrooms in each house:
+\begin{tabular}{c|c|c} 
+Living area $\left(\right.$ feet $\left.^{2}\right)$ & \#bedrooms & Price $(1000 \$$ s) \\
+\hline 2104 & 3 & 400 \\
+1600 & 3 & 330 \\
+2400 & 3 & 369 \\
+1416 & 2 & 232 \\
+3000 & 4 & 540 \\
+$\vdots$ & $\vdots$ & $\vdots$
+\end{tabular}
+
+Here, the $x$ 's are two-dimensional vectors in $\mathbb{R}^{2}$. For instance, $x_{1}^{(i)}$ is the living area of the $i$-th house in the training set, and $x_{2}^{(i)}$ is its number of bedrooms. (In general, when designing a learning problem, it will be up to you to decide what features to choose, so if you are out in Portland gathering housing data, you might also decide to include other features such as whether each house has a fireplace, the number of bathrooms, and so on. We'll say more about feature selection later, but for now let's take the features as given.)
+
+To perform supervised learning, we must decide how we're going to represent functions/hypotheses $h$ in a computer. As an initial choice, let's say we decide to approximate $y$ as a linear function of $x$ :
+\[
+h_{\theta}(x)=\theta_{0}+\theta_{1} x_{1}+\theta_{2} x_{2}
+\]
+
+Here, the $\theta_{i}$ 's are the parameters (also called weights) parameterizing the space of linear functions mapping from $\mathcal{X}$ to $\mathcal{Y}$. When there is no risk of confusion, we will drop the $\theta$ subscript in $h_{\theta}(x)$, and write it more simply as $h(x)$. To simplify our notation, we also introduce the convention of letting $x_{0}=1$ (this is the intercept term), so that
+\[
+h(x)=\sum_{i=0}^{n} \theta_{i} x_{i}=\theta^{T} x,
+\]
+where on the right-hand side above we are viewing $\theta$ and $x$ both as vectors, and here $n$ is the number of input variables (not counting $x_{0}$ ).

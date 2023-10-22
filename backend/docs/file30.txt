@@ -1,0 +1,11 @@
+30
+
+Lastly, let's discuss parameter fitting. Similar to our original derivation of ordinary least squares and logistic regression, if we have a training set of $m$ examples $\left\{\left(x^{(i)}, y^{(i)}\right) ; i=1, \ldots, m\right\}$ and would like to learn the parameters $\theta_{i}$ of this model, we would begin by writing down the log-likelihood
+\[
+\begin{aligned}
+\ell(\theta) & =\sum_{i=1}^{m} \log p\left(y^{(i)} \mid x^{(i)} ; \theta\right) \\
+& =\sum_{i=1}^{m} \log \prod_{l=1}^{k}\left(\frac{e^{\theta_{l}^{T} x^{(i)}}}{\sum_{j=1}^{k} e^{\theta_{j}^{T} x^{(i)}}}\right)^{1\left\{y^{(i)}=l\right\}}
+\end{aligned}
+\]
+
+To obtain the second line above, we used the definition for $p(y \mid x ; \theta)$ given in Equation (8). We can now obtain the maximum likelihood estimate of the parameters by maximizing $\ell(\theta)$ in terms of $\theta$, using a method such as gradient ascent or Newton's method.

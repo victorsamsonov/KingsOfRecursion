@@ -1,0 +1,12 @@
+14
+
+Instead, if we had added an extra feature $x^{2}$, and fit $y=\theta_{0}+\theta_{1} x+\theta_{2} x^{2}$, then we obtain a slightly better fit to the data. (See middle figure) Naively, it might seem that the more features we add, the better. However, there is also a danger in adding too many features: The rightmost figure is the result of fitting a 5 -th order polynomial $y=\sum_{j=0}^{5} \theta_{j} x^{j}$. We see that even though the fitted curve passes through the data perfectly, we would not expect this to be a very good predictor of, say, housing prices $(y)$ for different living areas $(x)$. Without formally defining what these terms mean, we'll say the figure on the left shows an instance of underfitting - in which the data clearly shows structure not captured by the model - and the figure on the right is an example of overfitting. (Later in this class, when we talk about learning theory we'll formalize some of these notions, and also define more carefully just what it means for a hypothesis to be good or bad.)
+
+As discussed previously, and as shown in the example above, the choice of features is important to ensuring good performance of a learning algorithm. (When we talk about model selection, we'll also see algorithms for automatically choosing a good set of features.) In this section, let us talk briefly talk about the locally weighted linear regression (LWR) algorithm which, assuming there is sufficient training data, makes the choice of features less critical. This treatment will be brief, since you'll get a chance to explore some of the properties of the LWR algorithm yourself in the homework.
+
+In the original linear regression algorithm, to make a prediction at a query point $x$ (i.e., to evaluate $h(x)$ ), we would:
+1. Fit $\theta$ to minimize $\sum_{i}\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}$.
+2. Output $\theta^{T} x$.
+In contrast, the locally weighted linear regression algorithm does the following:
+1. Fit $\theta$ to minimize $\sum_{i} w^{(i)}\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}$.
+2. Output $\theta^{T} x$.

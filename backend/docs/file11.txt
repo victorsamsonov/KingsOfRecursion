@@ -1,0 +1,31 @@
+11
+
+Hence,
+\[
+\begin{aligned}
+\nabla_{\theta} J(\theta) & =\nabla_{\theta} \frac{1}{2}(X \theta-\vec{y})^{T}(X \theta-\vec{y}) \\
+& =\frac{1}{2} \nabla_{\theta}\left(\theta^{T} X^{T} X \theta-\theta^{T} X^{T} \vec{y}-\vec{y}^{T} X \theta+\vec{y}^{T} \vec{y}\right) \\
+& =\frac{1}{2} \nabla_{\theta} \operatorname{tr}\left(\theta^{T} X^{T} X \theta-\theta^{T} X^{T} \vec{y}-\vec{y}^{T} X \theta+\vec{y}^{T} \vec{y}\right) \\
+& =\frac{1}{2} \nabla_{\theta}\left(\operatorname{tr} \theta^{T} X^{T} X \theta-2 \operatorname{tr} \vec{y}^{T} X \theta\right) \\
+& =\frac{1}{2}\left(X^{T} X \theta+X^{T} X \theta-2 X^{T} \vec{y}\right) \\
+& =X^{T} X \theta-X^{T} \vec{y}
+\end{aligned}
+\]
+
+In the third step, we used the fact that the trace of a real number is just the real number; the fourth step used the fact that $\operatorname{tr} A=\operatorname{tr} A^{T}$, and the fifth step used Equation (5) with $A^{T}=\theta, B=B^{T}=X^{T} X$, and $C=I$, and Equation (1). To minimize $J$, we set its derivatives to zero, and obtain the normal equations:
+\[
+X^{T} X \theta=X^{T} \vec{y}
+\]
+
+Thus, the value of $\theta$ that minimizes $J(\theta)$ is given in closed form by the equation
+\[
+\theta=\left(X^{T} X\right)^{-1} X^{T} \vec{y}
+\]
+3 Probabilistic interpretation
+When faced with a regression problem, why might linear regression, and specifically why might the least-squares cost function $J$, be a reasonable choice? In this section, we will give a set of probabilistic assumptions, under which least-squares regression is derived as a very natural algorithm.
+
+Let us assume that the target variables and the inputs are related via the equation
+\[
+y^{(i)}=\theta^{T} x^{(i)}+\epsilon^{(i)},
+\]
+where $\epsilon^{(i)}$ is an error term that captures either unmodeled effects (such as if there are some features very pertinent to predicting housing price, but that we'd left out of the regression), or random noise. Let us further assume that the $\epsilon^{(i)}$ are distributed IID (independently and identically distributed) according to a Gaussian distribution (also called a Normal distribution) with

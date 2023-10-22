@@ -1,0 +1,20 @@
+5
+
+For a single training example, this gives the update rule: ${ }^{1}$
+\[
+\theta_{j}:=\theta_{j}+\alpha\left(y^{(i)}-h_{\theta}\left(x^{(i)}\right)\right) x_{j}^{(i)} .
+\]
+
+The rule is called the LMS update rule (LMS stands for "least mean squares"), and is also known as the Widrow-Hoff learning rule. This rule has several properties that seem natural and intuitive. For instance, the magnitude of the update is proportional to the error term $\left(y^{(i)}-h_{\theta}\left(x^{(i)}\right)\right)$; thus, for instance, if we are encountering a training example on which our prediction nearly matches the actual value of $y^{(i)}$, then we find that there is little need to change the parameters; in contrast, a larger change to the parameters will be made if our prediction $h_{\theta}\left(x^{(i)}\right)$ has a large error (i.e., if it is very far from $\left.y^{(i)}\right)$.
+
+We'd derived the LMS rule for when there was only a single training example. There are two ways to modify this method for a training set of more than one example. The first is replace it with the following algorithm:
+\[
+\begin{array}{l}
+\text { Repeat until convergence }\{ \\
+\left.\qquad \theta_{j}:=\theta_{j}+\alpha \sum_{i=1}^{m}\left(y^{(i)}-h_{\theta}\left(x^{(i)}\right)\right) x_{j}^{(i)} \quad \text { (for every } j\right) . \\
+\}
+\end{array}
+\]
+
+The reader can easily verify that the quantity in the summation in the update rule above is just $\partial J(\theta) / \partial \theta_{j}$ (for the original definition of $J$ ). So, this is simply gradient descent on the original cost function $J$. This method looks at every example in the entire training set on every step, and is called batch gradient descent. Note that, while gradient descent can be susceptible to local minima in general, the optimization problem we have posed here for linear regression has only one global, and no other local, optima; thus gradient descent always converges (assuming the learning rate $\alpha$ is not too large) to the global minimum. Indeed, $J$ is a convex quadratic function. Here is an example of gradient descent as it is run to minimize a quadratic function.
+${ }^{1}$ We use the notation " $a:=b "$ to denote an operation (in a computer program) in which we set the value of a variable $a$ to be equal to the value of $b$. In other words, this operation overwrites $a$ with the value of $b$. In contrast, we will write " $a=b$ " when we are asserting a statement of fact, that the value of $a$ is equal to the value of $b$.

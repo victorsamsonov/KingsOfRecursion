@@ -1,0 +1,170 @@
+.about-container {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.chat-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.filler {
+    margin: auto 0;
+}
+
+.audio-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chat-box {
+    background-color: #a317a3;
+    height: 80%;
+    margin: auto 0;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dropzone-container {
+    /* height: 40vh;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin: 0 1rem;
+    margin-top: 10rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    border-style: dashed;
+    border-color: rgb(190, 32, 190); */
+    animation: fadein 1s ease-in;
+    flex: 3;
+}
+
+.avatar {
+    max-width: 450px;
+}
+
+
+.dropzone {
+    z-index: 100000;
+    height: 40vh;
+    background-color: rgba(233, 226, 226, 0.9);
+    margin: 0 1rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    border-style: dashed;
+    border-color: #000000;
+    animation: fadein 1s ease-in;
+}
+
+.dropzone-button {
+    /* width: 50%; */
+    padding: 0.5rem 1rem;
+    background-color: #FF0000;
+    color: white;
+    border-style: none;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+.dropzone-button:hover {
+    cursor: pointer;
+    background-color: #FF0000;
+    
+}
+
+.dropzone-button2 {
+    /* width: 50%; */
+    padding: 0.5rem 1rem;
+    background-color: rgb(163, 23, 163);
+    color: white;
+    border-style: none;
+    border-radius: 0.5rem;
+    margin: 1rem 1rem;
+}
+
+.dropzone-button2:hover {
+    cursor: pointer;
+    background-color: #FF0000;
+}
+
+.multi-word-input-container {
+    width: 100%;
+    margin: 1rem auto;
+  }
+  
+.multi-word-input {
+    background-color: white;
+    width: 90%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none; /* Prevent textarea from being resized by the user */
+     overflow-y: auto; 
+    overflow-wrap: break-word;
+}
+
+.uploaded-img {
+    max-height: 300px;
+    margin: auto auto;
+}
+
+.record-title {
+    color: white;
+}
+
+.audio-recorder-container {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.description
+
+
+
+.loader{
+    margin: 0 auto;
+    min-height: 7.25vh;
+}
+
+.no-loader {
+    min-height: 7.25vh;
+}
+
+
+.predict-button {
+    padding: 0.5rem 1rem;
+    background-color: rgb(23, 163, 112);
+    color: white;
+    border-style: none;
+    border-radius: 0.5rem;
+    margin: 1rem 1rem;
+    transition: 1s;
+}
+
+.predict-button:hover {
+    cursor: pointer;
+    background-color: rgb(23, 163, 112);
+    transition: 1s;
+}
+
+
+
+.actions{
+    min-height: 10vh;
+}
+
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }

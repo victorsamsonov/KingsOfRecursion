@@ -10,6 +10,7 @@ import {
   Route,
   Routes,
   Navigate,
+  useHistory
 } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import "./style.css";
@@ -46,7 +47,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/playlist" element={<PlaylistPage />} />
-              <Route path="/setup" element={<Setup />} />
+              <Route path="/setup" element={<Setup/>} />
               <Route path="/addplaylist" element={<AddPlaylist />} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>

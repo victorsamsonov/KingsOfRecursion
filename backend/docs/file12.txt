@@ -1,0 +1,29 @@
+12
+mean zero and some variance $\sigma^{2}$. We can write this assumption as " $\epsilon$ (i) $\sim$ $\mathcal{N}\left(0, \sigma^{2}\right)$." I.e., the density of $\epsilon^{(i)}$ is given by
+\[
+p\left(\epsilon^{(i)}\right)=\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(\epsilon^{(i)}\right)^{2}}{2 \sigma^{2}}\right) .
+\]
+
+This implies that
+\[
+p\left(y^{(i)} \mid x^{(i)} ; \theta\right)=\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}}{2 \sigma^{2}}\right) .
+\]
+
+The notation " $p\left(y^{(i)} \mid x^{(i)} ; \theta\right)$ " indicates that this is the distribution of $y^{(i)}$ given $x^{(i)}$ and parameterized by $\theta$. Note that we should not condition on $\theta$ (" $p\left(y^{(i)} \mid x^{(i)}, \theta\right)$ "), since $\theta$ is not a random variable. We can also write the distribution of $y^{(i)}$ as as $y^{(i)} \mid x^{(i)} ; \theta \sim \mathcal{N}\left(\theta^{T} x^{(i)}, \sigma^{2}\right)$.
+
+Given $X$ (the design matrix, which contains all the $x^{(i)}$ 's) and $\theta$, what is the distribution of the $y^{(i)}$ 's? The probability of the data is given by $p(\vec{y} \mid X ; \theta)$. This quantity is typically viewed a function of $\vec{y}$ (and perhaps $X$ ), for a fixed value of $\theta$. When we wish to explicitly view this as a function of $\theta$, we will instead call it the likelihood function:
+\[
+L(\theta)=L(\theta ; X, \vec{y})=p(\vec{y} \mid X ; \theta) .
+\]
+
+Note that by the independence assumption on the $\epsilon^{(i)}$ 's (and hence also the $y^{(i)}$ 's given the $x^{(i)}$ 's), this can also be written
+\[
+\begin{aligned}
+L(\theta) & =\prod_{i=1}^{m} p\left(y^{(i)} \mid x^{(i)} ; \theta\right) \\
+& =\prod_{i=1}^{m} \frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}}{2 \sigma^{2}}\right) .
+\end{aligned}
+\]
+
+Now, given this probabilistic model relating the $y^{(i)}$ 's and the $x^{(i)}$ 's, what is a reasonable way of choosing our best guess of the parameters $\theta$ ? The principal of maximum likelihood says that we should should choose $\theta$ so as to make the data as high probability as possible. I.e., we should choose $\theta$ to maximize $L(\theta)$.
+
+Instead of maximizing $L(\theta)$, we can also maximize any strictly increasing function of $L(\theta)$. In particular, the derivations will be a bit simpler if we

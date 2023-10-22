@@ -1,0 +1,47 @@
+28
+exponential family. We have:
+\[
+\begin{aligned}
+p(y ; \phi)= & \phi_{1}^{1\{y=1\}} \phi_{2}^{1\{y=2\}} \cdots \phi_{k}^{1\{y=k\}} \\
+= & \phi_{1}^{1\{y=1\}} \phi_{2}^{1\{y=2\}} \cdots \phi_{k}^{1-\sum_{i=1}^{k-1} 1\{y=i\}} \\
+= & \phi_{1}^{(T(y))_{1}} \phi_{2}^{(T(y))_{2}} \cdots \phi_{k}^{1-\sum_{i=1}^{k-1}(T(y))_{i}} \\
+= & \exp \left((T(y))_{1} \log \left(\phi_{1}\right)+(T(y))_{2} \log \left(\phi_{2}\right)+\right. \\
+& \left.\cdots+\left(1-\sum_{i=1}^{k-1}(T(y))_{i}\right) \log \left(\phi_{k}\right)\right) \\
+= & \exp \left((T(y))_{1} \log \left(\phi_{1} / \phi_{k}\right)+(T(y))_{2} \log \left(\phi_{2} / \phi_{k}\right)+\right. \\
+& \left.\cdots+(T(y))_{k-1} \log \left(\phi_{k-1} / \phi_{k}\right)+\log \left(\phi_{k}\right)\right) \\
+= & b(y) \exp \left(\eta^{T} T(y)-a(\eta)\right)
+\end{aligned}
+\]
+where
+\[
+\begin{aligned}
+\eta & =\left[\begin{array}{c}
+\log \left(\phi_{1} / \phi_{k}\right) \\
+\log \left(\phi_{2} / \phi_{k}\right) \\
+\vdots \\
+\log \left(\phi_{k-1} / \phi_{k}\right)
+\end{array}\right], \\
+a(\eta) & =-\log \left(\phi_{k}\right) \\
+b(y) & =1 .
+\end{aligned}
+\]
+
+This completes our formulation of the multinomial as an exponential family distribution.
+The link function is given (for $i=1, \ldots, k$ ) by
+\[
+\eta_{i}=\log \frac{\phi_{i}}{\phi_{k}} .
+\]
+
+For convenience, we have also defined $\eta_{k}=\log \left(\phi_{k} / \phi_{k}\right)=0$. To invert the link function and derive the response function, we therefore have that
+\[
+\begin{aligned}
+e^{\eta_{i}} & =\frac{\phi_{i}}{\phi_{k}} \\
+\phi_{k} e^{\eta_{i}} & =\phi_{i} \\
+\phi_{k} \sum_{i=1}^{k} e^{\eta_{i}} & =\sum_{i=1}^{k} \phi_{i}=1
+\end{aligned}
+\]
+
+This implies that $\phi_{k}=1 / \sum_{i=1}^{k} e^{\eta_{i}}$, which can be substituted back into Equation (7) to give the response function
+\[
+\phi_{i}=\frac{e^{\eta_{i}}}{\sum_{j=1}^{k} e^{\eta_{j}}}
+\]

@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
-import PlaylistObjectContext from "../../PlaylistContext";
+import {
+  PlaylistObjectContext,
+  UserPreferanceContext,
+} from "../../PlaylistContext";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 
@@ -16,7 +19,9 @@ function Setup() {
   const { contextValue, updateContextValue } = useContext(
     PlaylistObjectContext
   );
-  // const [playlistObject, ]
+  const { userPreferance, setUserPreferance } = useContext(
+    UserPreferanceContext
+  );
 
   useEffect(() => {
     let keys = Object.keys(contextValue);
@@ -27,6 +32,7 @@ function Setup() {
 
   const handleTextChange = (e) => {
     setText(e.target.value);
+    setUserPreferance(e.target.value);
     if (e.target.value.length > 20) {
       setCanProceed(true);
     } else {

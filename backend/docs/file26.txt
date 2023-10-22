@@ -1,0 +1,20 @@
+26
+9.2 Logistic Regression
+
+We now consider logistic regression. Here we are interested in binary classification, so $y \in\{0,1\}$. Given that $y$ is binary-valued, it therefore seems natural to choose the Bernoulli family of distributions to model the conditional distribution of $y$ given $x$. In our formulation of the Bernoulli distribution as an exponential family distribution, we had $\phi=1 /\left(1+e^{-\eta}\right)$. Furthermore, note that if $y \mid x ; \theta \sim \operatorname{Bernoulli}(\phi)$, then $\mathrm{E}[y \mid x ; \theta]=\phi$. So, following a similar derivation as the one for ordinary least squares, we get:
+\[
+\begin{aligned}
+h_{\theta}(x) & =E[y \mid x ; \theta] \\
+& =\phi \\
+& =1 /\left(1+e^{-\eta}\right) \\
+& =1 /\left(1+e^{-\theta^{T} x}\right)
+\end{aligned}
+\]
+
+So, this gives us hypothesis functions of the form $h_{\theta}(x)=1 /\left(1+e^{-\theta^{T} x}\right)$. If you are previously wondering how we came up with the form of the logistic function $1 /\left(1+e^{-z}\right)$, this gives one answer: Once we assume that $y$ conditioned on $x$ is Bernoulli, it arises as a consequence of the definition of GLMs and exponential family distributions.
+
+To introduce a little more terminology, the function $g$ giving the distribution's mean as a function of the natural parameter $(g(\eta)=\mathrm{E}[T(y) ; \eta])$ is called the canonical response function. Its inverse, $g^{-1}$, is called the canonical link function. Thus, the canonical response function for the Gaussian family is just the identify function; and the canonical response function for the Bernoulli is the logistic function. ${ }^{7}$
+9.3 Softmax Regression
+
+Let's look at one more example of a GLM. Consider a classification problem in which the response variable $y$ can take on any one of $k$ values, so $y \in$ $\{1,2, \ldots, k\}$. For example, rather than classifying email into the two classes spam or not-spam - which would have been a binary classification problemwe might want to classify it into three classes, such as spam, personal mail, and work-related mail. The response variable is still discrete, but can now take on more than two values. We will thus model it as distributed according to a multinomial distribution.
+${ }^{7}$ Many texts use $g$ to denote the link function, and $g^{-1}$ to denote the response function; but the notation we're using here, inherited from the early machine learning literature, will be more consistent with the notation used in the rest of the class.

@@ -1,0 +1,19 @@
+CS229 Lecture notes
+Andrew Ng
+
+Supervised learning
+Let's start by talking about a few examples of supervised learning problems. Suppose we have a dataset giving the living areas and prices of 47 houses from Portland, Oregon:
+\begin{tabular}{c|c} 
+Living area $\left(\right.$ feet $\left.^{2}\right)$ & Price $(1000 \$$ s $)$ \\
+\hline 2104 & 400 \\
+1600 & 330 \\
+2400 & 369 \\
+1416 & 232 \\
+3000 & 540 \\
+$\vdots$ & $\vdots$
+\end{tabular}
+
+We can plot this data:
+
+Given data like this, how can we learn to predict the prices of other houses in Portland, as a function of the size of their living areas?
+1

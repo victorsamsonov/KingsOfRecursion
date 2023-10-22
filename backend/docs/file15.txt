@@ -1,0 +1,12 @@
+15
+
+Here, the $w^{(i)}$ 's are non-negative valued weights. Intuitively, if $w^{(i)}$ is large for a particular value of $i$, then in picking $\theta$, we'll try hard to make $\left(y^{(i)}-\right.$ $\left.\theta^{T} x^{(i)}\right)^{2}$ small. If $w^{(i)}$ is small, then the $\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}$ error term will be pretty much ignored in the fit.
+A fairly standard choice for the weights is ${ }^{4}$
+\[
+w^{(i)}=\exp \left(-\frac{\left(x^{(i)}-x\right)^{2}}{2 \tau^{2}}\right)
+\]
+
+Note that the weights depend on the particular point $x$ at which we're trying to evaluate $x$. Moreover, if $\left|x^{(i)}-x\right|$ is small, then $w^{(i)}$ is close to 1 ; and if $\left|x^{(i)}-x\right|$ is large, then $w^{(i)}$ is small. Hence, $\theta$ is chosen giving a much higher "weight" to the (errors on) training examples close to the query point $x$. (Note also that while the formula for the weights takes a form that is cosmetically similar to the density of a Gaussian distribution, the $w^{(i)}$ 's do not directly have anything to do with Gaussians, and in particular the $w^{(i)}$ are not random variables, normally distributed or otherwise.) The parameter $\tau$ controls how quickly the weight of a training example falls off with distance of its $x^{(i)}$ from the query point $x$; $\tau$ is called the bandwidth parameter, and is also something that you'll get to experiment with in your homework.
+
+Locally weighted linear regression is the first example we're seeing of a non-parametric algorithm. The (unweighted) linear regression algorithm that we saw earlier is known as a parametric learning algorithm, because it has a fixed, finite number of parameters (the $\theta_{i}$ 's), which are fit to the data. Once we've fit the $\theta_{i}$ 's and stored them away, we no longer need to keep the training data around to make future predictions. In contrast, to make predictions using locally weighted linear regression, we need to keep the entire training set around. The term "non-parametric" (roughly) refers to the fact that the amount of stuff we need to keep in order to represent the hypothesis $h$ grows linearly with the size of the training set.
+${ }^{4}$ If $x$ is vector-valued, this is generalized to be $w^{(i)}=\exp \left(-\left(x^{(i)}-x\right)^{T}\left(x^{(i)}-x\right) /\left(2 \tau^{2}\right)\right)$, or $w^{(i)}=\exp \left(-\left(x^{(i)}-x\right)^{T} \Sigma^{-1}\left(x^{(i)}-x\right) / 2\right)$, for an appropriate choice of $\tau$ or $\Sigma$.
