@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import AudioReactRecorder, { RecordState } from "audio-react-recorder";
@@ -5,8 +6,9 @@ import axios from "axios";
 import ReactAudioPlayer from "react-audio-player";
 import ReactLoading from "react-loading";
 import PlaylistObjectContext from "../../PlaylistContext";
-
+import html2canvas from "html2canvas";
 const MicRecorder = require("mic-recorder-to-mp3");
+
 function PlaylistPage() {
   const [currentRecording, setCurrentRecording] = useState(null);
   const [processing, setProcessing] = useState(false);
@@ -18,16 +20,38 @@ function PlaylistPage() {
   const [prompt, setPrompt] = useState("");
   const [videoStream, setVideoStream] = useState("");
   const [currentVideoKey, setCurrentVideoKey] = useState("");
-
   const [playlistURL, setPlaylistURL] = useState("");
-  // const { contextValue, updateContextValue } = useContext(ObjectProvider);
-  const { contextValue, updateContextValue } = useContext(
-    PlaylistObjectContext
-  );
-  // const [playlistObject, ]
+  const { contextValue, updateContextValue } = useContext(PlaylistObjectContext);
+  const iframeRef = useRef(null);
+  const screenshotRef = useRef(null);
+  const canvasRef = useRef(null);
+  const iframeLoaded = useRef(false);
+
+
+  const captureScreenshot = () => {
+    if (iframeRef.current && screenshotRef.current) {
+      const iframe = iframeRef.current;
+      const iframeContent = iframe.contentDocument || iframe.contentWindow.document;
+      
+      html2canvas(iframeContent.body, { useCORS: true }).then((canvas) => {
+        const screenshotDataURL = canvas.toDataURL("image/png");
+        screenshotRef.current.src = screenshotDataURL;
+      });
+  
+      console.log("Screenshot captured!"); // Add this line for debugging
+    }
+  };
+
+
+  <button onClick={captureScreenshot} className="screenshot-button">
+    Capture Screenshot
+  </button>
+
+  useEffect(() => {
+    captureScreenshot();
+  }, []);
+
   const handleURLChange = (event) => {
-    console.log("hello");
-    console.log(event.target.value);
     setPlaylistURL(event.target.value);
   };
 
@@ -45,11 +69,11 @@ function PlaylistPage() {
     setProcessing(true);
     const formData = new FormData();
     formData.append("audio", blobData.blob, "audio.wav");
-    // Send the Blob data to your Flask backend using Axios
+
     axios
       .post("/save-recording", formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Make sure to set the content type
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
@@ -59,7 +83,6 @@ function PlaylistPage() {
       .catch((error) => {
         console.error("Failed to upload Blob data to Flask:", error);
         setProcessing(false);
-        // Handle error
       });
   }
 
@@ -71,16 +94,10 @@ function PlaylistPage() {
   }, []);
 
   const onStop = (audioData) => {
-    // console.log("audioData", audioData);
     setCurrentRecording(audioData);
     downloadAudioBlob(audioData);
     let pred = audioData !== null && currFiles !== null ? true : false;
-    console.log(audioData);
-    console.log(currFiles);
-    console.log("pred");
-    console.log(pred);
     setIsPredict(pred);
-    // transcribe();
   };
 
   const startRecording = async () => {
@@ -103,50 +120,14 @@ function PlaylistPage() {
     const formData = new FormData();
     formData.append("audio", currentRecording.blob, "audio.wav");
     formData.append("file", currFiles[0]);
-    console.log("predict");
+
     setProcessing(true);
     setLoadChat(true);
-    // await axios
-    //   .post("/predict", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data", // Make sure to set the content type
-    //     },
-    //   })
-    //   .then((response) => {
-    //     setProcessing(false);
-    //     setReceived(true);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Failed to upload Blob data to Flask:", error);
-    //     setProcessing(false);
-    //     // Handle error
-    //   });
-    // await obtainLLMResponse();
   };
 
   const handleTextChange = (event) => {
     setPrompt(event.target.value);
   };
-
-  // useEffect(() => {
-  //   const fetchVideoStream = async () => {
-  //     try {
-  //       const response = await axios.get("/video_feed"); // Adjust the URL as needed
-  //       if (response.status === 200) {
-  //         // console.log(response.data);
-  //         setVideoStream(
-  //           URL.createObjectURL(
-  //             new Blob([response.data], { type: "image/jpeg" })
-  //           )
-  //         );
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching video stream:", error);
-  //     }
-  //   };
-
-  //   fetchVideoStream();
-  // }, []);
 
   const handlePlaylistURL = async (e) => {
     e.preventDefault();
@@ -157,14 +138,12 @@ function PlaylistPage() {
       updateContextValue(response.data.text_dict);
       const keys = Object.keys(response.data.text_dict);
       setCurrentVideoKey(keys[0]);
-      console.log(response.data.text_dict);
-      // setResult(response.data.result);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  function renderIframesFromObject(obj) {
+  const renderIframesFromObject = (obj) => {
     const iframeKeys = Object.keys(obj);
 
     return (
@@ -180,11 +159,7 @@ function PlaylistPage() {
         ))}
       </div>
     );
-  }
-
-  const iframeRef = useRef(null);
-  const canvasRef = useRef(null);
-  const iframeLoaded = useRef(false); // To track if the iframe has loaded
+  };
 
   const captureVideoFrame = () => {
     var browser = document.querySelector("iframe");
@@ -282,31 +257,23 @@ function PlaylistPage() {
               rows="5"
             />
           </Row>
-          {/* <ReactLoading type="bars" color="#a317a3" className="loader" /> */}
         </Container>
       </Container>
-
-      {/* <iframe
-        src="/video_feed"
-        frameborder="0"
-        allow="autoplay; encrypted-media;fullscreen"
-        allowfullscreen={true}
-        title="video"
-        width="500"
-        height="380"
-      /> */}
       <input
         type="text"
         id="textInput"
         value={playlistURL}
         onChange={handleURLChange}
       />
-      <button onClick={handlePlaylistURL}></button>
-
-      {/* <iframe autoPlay controls src={videoStream} width="640" height="480" /> */}
-      {/* <img id="bg" width="1200px" height="900px" src="/video_feed" /> */}
+      <button onClick={handlePlaylistURL}>Submit</button>
+  
+      {/* "Capture Screenshot" button placed here */}
+      <button onClick={captureScreenshot} className="screenshot-button">
+        Capture Screenshot
+      </button>
     </section>
   );
-}
+  
+ }   
 
 export default PlaylistPage;

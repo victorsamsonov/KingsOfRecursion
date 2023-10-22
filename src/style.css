@@ -870,10 +870,13 @@ img {
   margin-left: 1rem
 }
 
+.main-name {
+  text-align: center;
+}
 
 .description-container {
   width: 100%;
-  text-align: left;
+  text-align: center;
   text-indent: 25px;
   margin-left: 1rem
 }
@@ -940,3 +943,131 @@ img {
   font-size: 1.25rem;
   color: white
 }
+
+/* Add this section to style the screenshot button */
+.screenshot-button {
+  margin: 1rem 0;
+  padding: 0.5rem 2rem;
+  background-color: #FF0000;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  transition: 1s;
+  z-index: 100;
+}
+
+.screenshot-button:hover {
+  cursor: pointer;
+  transition: 1s;
+  background-color: rgba(255, 0, 0, 0.9);
+}
+
+.started-button:hover {
+  background-color: #d32f2f; /* A slightly darker shade of YouTube red */
+  transition: background-color 0.3s ease-in-out;
+}
+
+
+/* New */
+.ux-section-bg {
+  background-color: #f6f9fc;
+  padding: 2rem 0;
+}
+
+.ux-home-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ux-row {
+  align-items: center;
+  justify-content: center;
+}
+
+.ux-home-header {
+  padding-bottom: 2rem;
+}
+
+.ux-heading {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.ux-wave {
+  font-size: 2rem;
+}
+
+.ux-typing-section {
+  margin-top: 2rem;
+}
+
+.ux-home-image-section {
+  text-align: center;
+}
+
+.ux-home-image {
+  max-width: 80%;
+  display: block;
+  margin: 0 auto;
+}
+
+.ux-yt-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 3rem;
+}
+
+.ux-yt-logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ux-yt-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 1rem;
+}
+
+.ux-yt-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.ux-started-button {
+  background-color: #007BFF;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ux-started-button:hover {
+  background-color: #0056b3;
+}
+
+.ux-nav-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.ux-nav-link:hover {
+  color: #f6f9fc;
+}
+
+.ux-footer {
+  text-align: center;
+  padding: 1rem 0;
+  background-color: #343a40;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+/* ... previous styles ... */
+
+

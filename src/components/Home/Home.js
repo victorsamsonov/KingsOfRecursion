@@ -1,71 +1,49 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import Type from "./Type";
+
+// Assets
 import homeLogo from "../../Assets/ai.png";
 import ytLogo from "../../Assets/yt.png";
 
-import Type from "./Type";
-// import React, { useState } from "react";
-// import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { Link } from "react-router-dom";
-
 function Home() {
   return (
-    <section className="section-bg">
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content">
-          <Row>
-            <Col md={7} className="home-header">
-              <h1 style={{ paddingBottom: 15 }} className="heading">
-                Welcome to Lorem Ipsum!
-                <span className="wave" role="img" aria-labelledby="wave">
-                  👋🏻
-                </span>
-              </h1>
-
-              {/* <h1 className="heading-name">
-                I'M
-                <strong className="main-name"> SOUMYAJIT BEHERA</strong>
-              </h1> */}
-
-              <div style={{ padding: 50, textAlign: "left" }}>
-                <Type />
-              </div>
-            </Col>
-
-            <Col md={5} style={{ paddingBottom: 20 }}>
-              <img
-                src={homeLogo}
-                alt="ai pig"
-                className="img-fluid"
-                style={{ maxHeight: "350px" }}
-              />
-            </Col>
-          </Row>
-        </Container>
-        <div className="home-yt-start-container">
-          <div className="yt-logo-component">
-            <img src={ytLogo} alt="youtube logo" className="yt-logo" />
-            <h1 className="yt-logo-component-text">
-              Enhanced Youtube Experience
+    <Container fluid className="ux-section-bg">
+      <Container className="ux-home-content">
+        <Row className="ux-row">
+          <Col className="ux-home-header">
+            <h1 className="ux-heading">
+              Welcome to EffiSTEM!
+              <span className="ux-wave">👋🏻</span>
             </h1>
-          </div>
-          <button
-            style={{ cursor: "pointer" }}
-            className="started-button"
-            as={Link}
+            <div className="ux-typing-section">
+              <Type />
+            </div>
+          </Col>
 
-            // onClick={() => updateExpanded(false)}
-          >
-            <Nav.Item>
-              <Nav.Link as={Link} to="/playlist">
-                <text style={{ color: "white" }}>Get Started</text>
-              </Nav.Link>
-            </Nav.Item>
+          <Col className="ux-home-image-section">
+            <img src={homeLogo} alt="ai pig" className="ux-home-image"/>
+          </Col>
+        </Row>
+
+        <div className="ux-yt-section">
+          <div className="ux-yt-logo-section">
+            <img src={ytLogo} alt="youtube logo" className="ux-yt-logo" />
+            <h1 className="ux-yt-text">Enhanced Youtube Experience</h1>
+          </div>
+          <button className="ux-started-button">
+            <Nav.Link as={Link} to="/playlist" className="ux-nav-link">
+              Get Started
+            </Nav.Link>
           </button>
         </div>
       </Container>
-    </section>
+
+      <footer className="ux-footer">
+        © 2023 EffiSTEM. Powered by Google Cloud and AI.
+      </footer>
+    </Container>
   );
 }
 

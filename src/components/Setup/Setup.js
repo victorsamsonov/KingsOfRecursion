@@ -55,7 +55,7 @@ function Setup() {
   return (
     <section>
       <Container fluid className="project-section">
-        <h1 className="playlist-header">Current Setup</h1>
+        <h1 className="playlist-header">Prompt Center</h1>
         <Container>
           <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
             <Col md={7} className="home-header">
@@ -63,7 +63,7 @@ function Setup() {
                 style={{ paddingBottom: 15, textAlign: "left" }}
                 className="heading"
               >
-                <strong className="main-name"> LoremIpsum </strong> offers a
+                <strong className="main-name"> EffiSTEM </strong> offers a
                 customizable experience for every student via using Large
                 Language Models{" "}
                 {/* <span className="bou" role="img" aria-labelledby="wave"> */}
