@@ -180,7 +180,10 @@ function PlaylistPage() {
     addUserChat();
     setPrompt("");
     try {
-      const response = await axios.post("/chatbot", { prompt: prompt });
+      const response = await axios.post("/chatbot", {
+        prompt: prompt,
+        user_style: userPreferance,
+      });
       console.log(response);
       addBotChat(response.data.out);
       // setResult(response.data.result);
@@ -198,7 +201,7 @@ function PlaylistPage() {
         <div className="iframe-slider">
           {iframeKeys.map((key, index) => (
             <div>
-              <text>Video {index+1}</text>
+              <text>Video {index + 1}</text>
               <img
                 src={`https://img.youtube.com/vi/${key}/maxresdefault.jpg`}
                 className="img-playlist"
