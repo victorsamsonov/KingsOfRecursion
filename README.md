@@ -36,7 +36,7 @@ npm install
 Any advise for common problems or issues.
 ```
 command to run if program contains helper info
-```
+
 
 ## Authors
 
@@ -49,3 +49,5 @@ Julen Ferro
 ## License
 
 This project is licensed under the EffiSTEM License
+
+<img src="https://github.com/victorsamsonov/KingsOfRecursion/blob/main/src/Assets/hack_with_header.jpg"/>
