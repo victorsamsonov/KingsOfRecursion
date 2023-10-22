@@ -11,7 +11,7 @@ from langchain.chains import LLMChain
 
 class Chatbot():
     def create_database_from_docs_folder(self):
-        os.environ["OPENAI_API_KEY"] = "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"
+        os.environ["OPENAI_API_KEY"] = "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"
 
         #Load all the .txt files from docs directory
         loader = DirectoryLoader('./docs/',glob = "**/*.txt")
@@ -36,7 +36,7 @@ class Chatbot():
         self.db = self.create_database_from_docs_folder()
     
     
-    def predict(self, user_query):
+    def predict(self, user_query, user_style):
         k = 3
         docs_retrieved = self.db.max_marginal_relevance_search(user_query, k=k)
 
@@ -52,7 +52,11 @@ class Chatbot():
 
         template = """You are gonna receive a <USER_QUERY>, and you should respond
 
-        based on the <RETRIEVED_DOCUMENTS>. 
+        based on the <RETRIEVED_DOCUMENTS>. Your name is EffiSTEM, you are a chatbot which specializes in STEM while leveraging youtube playlists and uploaded notes by the user to generate answers. You also adapt to the learning style of the user, you will explain concepts in a way that the user likes.
+
+        This is the user learning style, if the user has a hobbie, change your language and explain the concept in a language related to the user preferance, <USER_STYLE>: {user_style}.
+
+
 
         This is the <USER_QUERY>: {user_query}
 
@@ -60,13 +64,13 @@ class Chatbot():
         
         When you build your response, at the bottom of it, you should add the references 
         of the retrieved documents that you used. For instance, you should add all the
-        filenames of the REFERENCE values that you receive in <RETRIEVED_DOCUMENTS>.
+        filenames of the REFERENCE values that you receive in <RETRIEVED_DOCUMENTS>. Use <USER_STYLE> in order to explain concept, if the user likes basketball relate concepts to basketball only if it is a very technical question.
         
         Example questions: What is the name of the professor?
         
         Response: 
         
-        The name of the professor is Yan Yan.
+        The name of the professor is Andrew Ng.
         
         This information was found in the next references: 
         
@@ -75,7 +79,7 @@ class Chatbot():
 
         """
 
-        prompt = PromptTemplate(template=template, input_variables=["user_query", "context"])
+        prompt = PromptTemplate(template=template, input_variables=["user_style", "user_query", "context"])
 
         llm = OpenAI()
 
@@ -86,6 +90,7 @@ class Chatbot():
         print('METADATA: ', docs_retrieved[0].metadata)
         
         response = llm_chain.run({
+            'user_style': user_style,
             'user_query': user_query,
             'context': context
         })

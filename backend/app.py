@@ -181,7 +181,8 @@ def text_to_voice(text):
 def chatbot():
     data = request.get_json()
     prompt = data.get('prompt')
-    out = CHATBOT.predict(prompt)
+    user_style = data.get("user_style")
+    out = CHATBOT.predict(prompt, user_style)
     return jsonify({'out':out})
 
 
