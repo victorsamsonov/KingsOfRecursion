@@ -48,6 +48,6 @@ Julen Ferro
 
 ## License
 
-This project is licensed under the EffiSTEM License
+This project is licensed under the EffiSTEM License.
 
 <img src="https://github.com/victorsamsonov/KingsOfRecursion/blob/main/src/Assets/hack_with_header.jpg"/>
