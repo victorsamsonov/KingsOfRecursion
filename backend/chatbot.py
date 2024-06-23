@@ -11,7 +11,7 @@ from langchain.chains import LLMChain
 
 class Chatbot():
     def create_database_from_docs_folder(self):
-        os.environ["OPENAI_API_KEY"] = "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"
+        os.environ["OPENAI_API_KEY"] = ""
 
         #Load all the .txt files from docs directory
         loader = DirectoryLoader('./docs/',glob = "**/*.txt")
